@@ -2,7 +2,7 @@
   "engines": {
     "node" : "12.16.2"
   },
-  "name": "Heroku App",
+  "name": "heroku-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
