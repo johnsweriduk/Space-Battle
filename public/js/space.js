@@ -30,7 +30,7 @@ class Space {
         }
     }
     gameLoop() {
-        return this.player.isAlive && this.activeAlien != -1;
+        return this.player.lives >= 0 && this.activeAlien != -1;
     }
     update() {
         this.updateOverlay();
@@ -45,7 +45,7 @@ class Space {
                 this.activeAlien.attack(this.player);
             }
         } else {
-            if(this.player.hullStrength > 0) {
+            if(this.player.lives >= 0) {
                 alert('You Win!');
             } else {
                 alert('GAME OVER!');

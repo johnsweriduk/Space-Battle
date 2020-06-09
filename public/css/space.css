@@ -7,9 +7,9 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url(/img/space-background.jpg);
+    background: url(/img/space-background.png);
     background-size: cover;
-    cursor: url(/img/crosshair.png), auto;
+    cursor: url(/img/crosshair.png) 35 28, auto;
 }
 
 .ufo {
@@ -20,7 +20,7 @@ body {
     width: 300px;
     height: 200px;
     background-repeat: no-repeat;
-    cursor: url(/img/crosshair-red.png), auto;
+    cursor: url(/img/crosshair-red.png) 35 28, auto;
 }
 .health-bar {
     position: fixed;
