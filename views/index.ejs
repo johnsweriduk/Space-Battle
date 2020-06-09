@@ -2,36 +2,32 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>title</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="/css/space.css">
+    <title>Space Battle!</title>
+    <%- include('partials/head.ejs') %>
 </head>
 <body>
-<div id="space">
-    <% if(currentUser) { %>
-        <div class="modal">
-            <div class="title">
-                <p>Welcome, <% currentUser.name %></p>
-            </div>
-            <div class="buttons">
-                <a id="play" class="button" href="/play/1">Play</a>
-            </div>
+
+<% if(currentUser) { %>
+    <div class="modal">
+        <div class="title">
+            <p>Welcome, <% currentUser.username %></p>
         </div>
-    <% } else { %>
-        <div class="modal">
-            <div class="title">
-                <p>Login/Signup</p>
-            </div>
-            <div class="buttons">
-                <a id="new-account" class="button" href="/users/new">New Account</a>
-                <a id="login" class="button" href="/sessions/new">Login</a>
-            </div>
+        <div class="buttons">
+            <a id="play" class="button" href="/play/1">Play</a>
         </div>
-    <% } %>
-</div>
-<script src="ship.js"></script>
-<script src="enemy.js"></script>
-<script src="space.js"></script>
-<script src="app.js"></script>
+    </div>
+<% } else { %>
+    <div class="modal">
+        <div class="title">
+            <p>Login/Signup</p>
+        </div>
+        <div class="buttons">
+            <a id="new-account" class="button" href="/users/new">New Account</a>
+            <a id="login" class="button" href="/sessions/new">Login</a>
+        </div>
+    </div>
+<% } %>
+<div id="space"></div>
+<%- include ('partials/scripts.ejs') %>
 </body>
 </html>

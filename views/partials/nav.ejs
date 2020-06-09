@@ -1,0 +1,19 @@
+<nav>
+    <ul>
+        <li><a href="/logs">Home</a></li>
+        <% if( currentUser ) { %>
+            <li><a href="/logs/new-log">New log</a></li>
+        <% } %>
+        <% if( currentUser ) { %>
+            <li>Welcome, <%= currentUser.username %></li>
+            <li>
+                <form action="/sessions?_method=DELETE" method="POST">
+                    <input type="submit" value="Log Out">
+                </form>
+            </li>
+        <% } else { %>
+            <li><a href="/users/new">Sign Up</a></li>
+            <li><a href="/sessions/new">Log In</a></li>
+        <% } %>
+    </ul>
+</nav>

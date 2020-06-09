@@ -1,11 +1,6 @@
-class Enemy {
-    constructor(hullStrength, firePower, accuracy, velocity) {
-        this.name = name;
-        this.hullStrength = hullStrength;
-        this.firePower =  firePower;
-        this.accuracy = accuracy;
-        this.isAlive = true;
-        this.canAttack = true;
+class Enemy extends Spaceship {
+    constructor(name, hullStrength, firePower, accuracy, velocity) {
+        super(name, hullStrength, firePower, accuracy);
         this.velocity = velocity;
         let el = document.createElement('div');
         el.setAttribute('id',this.name);

@@ -36,7 +36,7 @@ sessions.post('/', (req, res) => {
                 // redirect back to our home page
                 req.session.message = '';
                 req.session.counter = 0;
-                res.redirect('/logs');
+                res.redirect('/');
             } else {
                 // passwords do not match
                 req.session.message = 'Username/password combination does not match.';

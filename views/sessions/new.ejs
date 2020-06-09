@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Log In</title>
+    <%- include('../partials/head.ejs') %>
+</head>
+<body>
+<%- include('../partials/nav.ejs') %>
+<div class="logs">
+    <% if(message != '') { %>
+        <div class="message">
+            <p><%= message%></p>
+        </div>
+    <% } %>
+    <form action="/sessions" method="POST">
+        <fieldset>
+            <legend>Log In</legend>
+            <div class="field">
+                <label for="name">Username:</label>
+                <input type="text" name="username" required/>
+            </div>
+            <div class="field">
+                <label for="password">Password:</label>
+                <input type="password" name="password" />
+            </div>
+            <div class="field">
+                <button type="submit">Submit</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+</body>
+</html>

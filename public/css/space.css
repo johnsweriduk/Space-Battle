@@ -9,6 +9,7 @@ body {
     bottom: 0;
     background: url(/img/space-background.jpg);
     background-size: cover;
+    cursor: url(/img/crosshair.png), auto;
 }
 
 .ufo {
