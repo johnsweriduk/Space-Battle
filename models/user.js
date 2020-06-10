@@ -3,8 +3,7 @@ const Schema = mongoose.Schema;
 
 const userSchema = Schema({
     username: { type: String, unique: true, required: true },
-    password: String,
-    shipId: String,
+    password: String
 });
 
 const User = mongoose.model('User', userSchema);

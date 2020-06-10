@@ -21,15 +21,16 @@ users.post('/', (req, res) => {
         if(err) {
             req.session.message = 'Username already taken. Please choose another.';
             req.session.counter = 1;
-            res.redirect('/users/new');
+            res.send({error: 1});
         } else {
             console.log('user is created', createdUser);
             req.session.message = '';
             req.session.counter = 0;
-            res.redirect('/sessions/new');
+            res.send({user: createdUser.username});
         }
     })
 });
+
 
 users.delete('/', (req, res) => {
    User.findOneAndRemove({username: req.session.currentUser.username});

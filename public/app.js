@@ -31,18 +31,60 @@ const mainLoop = () => {
         requestAnimationFrame(mainLoop);
     }
 };
-
+$(document).on('click', '.ajax-button', (e) => {
+    e.preventDefault();
+    $.ajax({
+        url: $(e.target).attr('href')
+    }).done((data) => {
+        console.log(data);
+        $('.modal').html(data);
+    });
+})
 $(document).on('click', '#new-user', (e) => {
     e.preventDefault();
     const userData = $('#new-user-form').serialize();
+    // create user
+    // create ship
+    // load login data
     $.ajax({
         url: '/users/',
-        data: userData
+        data: userData,
+        method: 'POST'
     }).done( (data) => {
-        $.ajax({
-
-        }).done((data) => {
-
-        });
-    })
+        if(!data.error) {
+            const shipData = {
+                name: data.user,
+                hp: $('input[name="ship-hull"]').val(),
+                damage: $('input[name="ship-firepower"]').val()
+            };
+            console.log(shipData);
+            $.ajax({
+                url: '/ship',
+                data: shipData,
+                method: 'POST'
+            }).done(() => {
+                // load login data
+                console.log('test');
+                $.ajax({
+                    url: '/sessions/new'
+                }).done((data) => {
+                    $('.modal').html(data);
+                });
+            });
+        } else {
+            $('.modal').append('<p class="error">Username already taken, please choose another.</p>');
+        }
+    });
+});
+$(document).on('click', '#back', (e) => {
+    e.preventDefault();
+    const html = '\n' +
+        '        <div class="title">' +
+        '            <p>Login/Signup</p>' +
+        '        </div>\n' +
+        '        <div class="buttons">' +
+        '            <a id="new-account" class="button ajax-button" href="/users/new">New Account</a>' +
+        '            <a id="login" class="button ajax-button" href="/sessions/new">Login</a>' +
+        '        </div>';
+    $('.modal').html(html);
 });

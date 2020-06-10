@@ -23,6 +23,7 @@
             <% } %>
         <div class="buttons">
             <a id="play" class="button" href="/enemy/1">Play</a>
+            <a id="edit-ship" class="button" href="/ship/<%= currentUser.username %>">Edit Stats</a>
         </div>
     </div>
 <% } else { %>
@@ -31,20 +32,22 @@
             <p>Login/Signup</p>
         </div>
         <div class="buttons">
-            <a id="new-account" class="button" href="/users/new">New Account</a>
-            <a id="login" class="button" href="/sessions/new">Login</a>
+            <a id="new-account" class="button ajax-button" href="/users/new">New Account</a>
+            <a id="login" class="button ajax-button" href="/sessions/new">Login</a>
         </div>
     </div>
 <% } %>
-
-<div class="modal next-level" style="display: none;">
-    <div class="title">
-        <p>Level <span class="level">1</span></p>
+<% if(currentUser) { %>
+    <div class="modal next-level" style="display: none;">
+        <div class="title">
+            <p>Level <span class="level">1</span></p>
+        </div>
+        <div class="buttons">
+            <a id="play" class="button" href="/enemy/1">Play</a>
+            <a id="edit-ship" class="button" href="/ship/<%= currentUser.username %>">Edit Stats</a>
+        </div>
     </div>
-    <div class="buttons">
-        <a id="play" class="button" href="/enemy/1">Play</a>
-    </div>
-</div>
+<% } %>
 <div id="space"></div>
 <%- include ('partials/scripts.ejs') %>
 </body>

@@ -21,29 +21,31 @@ router.get('/leaderboard', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const firepower = req.body.firePower;
+    const firepower = req.body.damage;
     const hp = req.body.hp;
-    const ship = {
-        name: req.body.username,
+    const createdShip = {
+        name: req.body.name,
         hp: hp * 20,
         damage: firepower,
         level: 1,
         highScore: 0
     };
-    Ship.create(ship);
+    console.log(createdShip);
+    Ship.create(createdShip, (err, ship) => {
+        console.log(ship);
+    });
     Ship.find({name: req.body.username}, (err, ship) => {
-       res.send(ship._id);
+       res.send(200);
     });
 });
 
 router.put('/', (req, res) => {
     console.log(req.body);
-    Ship.find({name: req.body.name}, (err, ship) => {
-        console.log(ship);
-        console.log('test');
+    Ship.findOne({name: req.body.name}, (err, ship) => {
         //ship = ship[0];
         if(req.body.score) {
             if(req.body.score > ship.highScore) {
+                console.log('test');
                 ship.highScore = req.body.score;
             }
         }
@@ -52,8 +54,8 @@ router.put('/', (req, res) => {
             ship.level++;
             ship.hp *= 1.1;
             ship.damage *= 1.1;
-            ship.save();
         }
+        ship.save();
     });
 });
 
