@@ -41,10 +41,10 @@ class Enemy extends Spaceship {
         }, 500);
     }
     move() {
-        let dispX = this.velocity * 5 *  2 * (Math.random() - 0.5);
-        let dispY = this.velocity * 5 *  2 * (Math.random() - 0.5);
-        this.momX += dispX / 5;
-        this.momY += dispY / 5;
+        let dispX = this.velocity * 125 *  2 * (Math.random() - 0.5);
+        let dispY = this.velocity * 125 *  2 * (Math.random() - 0.5);
+        this.momX += dispX * 1000;
+        this.momY += dispY * 1000;
         if(Math.abs(this.momX) > 3) {
             this.momX = 0;
         }

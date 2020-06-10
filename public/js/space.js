@@ -7,6 +7,7 @@ class Space {
         this.currentLevel = 1;
         this.nextLevel = false;
         this.shipCount = 1;
+        this.moveTimeout = true;
     }
     addPlayer(ship) {
         this.player = ship;
@@ -50,10 +51,15 @@ class Space {
         }
         if(this.gameLoop() && !this.nextLevel) {
             // player is alive, game isnt over
-            if(this.activeWave.length > 0) {
+            if(this.activeWave.length > 0 && this.moveTimeout) {
                 for(let alien of this.activeWave) {
                     alien.move();
                 }
+                this.moveTimeout = false;
+                const self = this;
+                setTimeout( () => {
+                    self.moveTimeout = true;
+                }, 100);
             } else if(this.waves.length > 0) {
                 this.cycleWaves();
             }

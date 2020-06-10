@@ -21,6 +21,7 @@ body {
     height: 200px;
     background-repeat: no-repeat;
     cursor: url(/img/crosshair-red.png) 35 28, auto;
+    transition: all 0.1s ease-in-out;
 }
 .health-bar {
     position: fixed;
