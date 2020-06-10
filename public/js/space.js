@@ -86,7 +86,7 @@ class Space {
                     // do nothing
                 });
                 $('.next-level .level').html(this.currentLevel);
-                $('.next-level a').attr('href', '/enemy/' + this.currentLevel);
+                $('.next-level a:first-child').attr('href', '/enemy/' + this.currentLevel);
                 $('.next-level').show();
             } else if(!this.nextLevel) {
                 //alert('GAME OVER!');
@@ -149,10 +149,9 @@ class Space {
         const $gameOver = $('<div>').addClass('game-over').html('<p>Game Over</p>');
         $('.modal.next-level').prepend($gameOver);
         $('.next-level .level').html(this.currentLevel);
-        console.log(this.currentLevel);
-        $('.next-level a').attr('href', '/enemy/' + this.currentLevel);
+        $('.next-level a:first-child').attr('href', '/enemy/' + this.currentLevel);
         this.activeWave = [];
         this.waves = [];
-        this.nextLevel = false;
+        this.nextLevel = true;
     }
 }
