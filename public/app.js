@@ -6,7 +6,7 @@ const randomNumberBounded = (min, max) => {
     }
 }
 
-const space = new Space();
+let space = new Space();
 let player = new Spaceship('USS Schwarzenegger', 99, 5, 0.7);
 $(document).on('click', '#play', (e) => {
     e.preventDefault();
@@ -27,14 +27,34 @@ $(document).on('click', '#play', (e) => {
                 for(let wave of waves) {
                     space.nextLevel = false;
                     space.addWave(wave);
-                    requestAnimationFrame(mainLoop);
                 }
+                requestAnimationFrame(mainLoop);
+                $('.modal').hide();
             });
-            $('.modal').hide();
         });
     }
 });
-
+$(document).on('click', '#play-level', (e) => {
+    e.preventDefault();
+    const href= $(e.target).attr('href');
+    $.ajax({
+        url: href
+    }).done( (waves) => {
+        for(let wave of waves) {
+            space.nextLevel = false;
+            space.addWave(wave);
+        }
+        requestAnimationFrame(mainLoop);
+        $('.modal.next-level').hide();
+    });
+});
+$(document).on('click', '#restart', (e) => {
+    e.preventDefault();
+    space = new Space();
+    $('#space').empty();
+    $('.modal').show();
+    $('.modal.next-level').hide();
+});
 const mainLoop = () => {
     space.update();
     if(!space.nextLevel) {
@@ -59,6 +79,7 @@ $(document).on('click', '.ajax-button', (e) => {
         if(method == 'GET') {
             $('.modal').html(data);
         } else {
+            oldHtml = '';
             window.location.href="/";
         }
     });

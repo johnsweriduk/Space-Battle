@@ -29,6 +29,7 @@
         <div class="buttons">
             <a id="new-account" class="button ajax-button" href="/users/new">New Account</a>
             <a id="login" class="button ajax-button" href="/sessions/new">Login</a>
+            <a id="leaderboards" class="button ajax-button" href="/ship/leaderboard">Leaderboard</a>
         </div>
     </div>
 <% } %>
@@ -39,8 +40,9 @@
             <p>Level <span class="level">1</span></p>
         </div>
         <div class="buttons">
-            <a id="play" class="button" href="/enemy/1">Play</a>
+            <a id="play-level" class="button" href="/enemy/1">Play</a>
             <a id="logout" class="button ajax-button logout" href="/sessions?_method=DELETE">Log Out</a>
+            <a id="restart" class="button" href="#">Restart</a>
         </div>
     </div>
 <% } %>

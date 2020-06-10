@@ -68,7 +68,7 @@ class Space {
                 this.cycleWaves();
             }
             for(let alien of this.activeWave) {
-                if (Math.random() > 0.99935) {
+                if (Math.random() > 0.995) {
                     alien.attack(this.player);
                 }
             }
