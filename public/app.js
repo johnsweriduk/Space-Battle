@@ -12,6 +12,7 @@ space.addPlayer(player);
 space.createOverlay();
 $(document).on('click', '#play', (e) => {
     e.preventDefault();
+    $('.game-over').remove();
     const href= $(e.target).attr('href');
     $.ajax({
         url: href

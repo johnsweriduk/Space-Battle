@@ -42,18 +42,16 @@ class Space {
         }
     }
     gameLoop() {
-        return this.player.lives >= 0 && (this.waves.length > 0 || this.activeWave.length > 0);
+        return this.player.hullStrength > 0 && (this.activeWave.length > 0 || this.waves.length > 0);
     }
     update() {
-        if(this.moveTimeout) {
-            this.updateOverlay();
-        }
+        this.updateOverlay();
         for(let i = 0; i < this.activeWave.length; i++) {
             if(!this.activeWave[i].isAlive) {
                 this.activeWave.splice(i, 1);
             }
         }
-        if(this.gameLoop() && !this.nextLevel) {
+        if(this.gameLoop()) {
             // player is alive, game isnt over
             if(this.activeWave.length > 0 && this.moveTimeout) {
                 for(let alien of this.activeWave) {
@@ -68,12 +66,12 @@ class Space {
                 this.cycleWaves();
             }
             for(let alien of this.activeWave) {
-                if (Math.random() > 0.9995) {
+                if (Math.random() > 0.99935) {
                     alien.attack(this.player);
                 }
             }
         } else {
-            if(this.player.lives >= 0 && !this.nextLevel) {
+            if(this.player.hullStrength > 0 && !this.nextLevel) {
                 this.nextLevel = true;
                 this.currentLevel++;
                 const data = {
@@ -91,7 +89,7 @@ class Space {
                 $('.next-level a').attr('href', '/enemy/' + this.currentLevel);
                 $('.next-level').show();
             } else if(!this.nextLevel) {
-                alert('GAME OVER!');
+                //alert('GAME OVER!');
                 // reset
                 this.resetGame();
             }
@@ -99,7 +97,7 @@ class Space {
     }
     updateOverlay() {
         let healthBar = document.getElementById('health-bar');
-        healthBar.innerHTML = this.player.hullStrength;
+        healthBar.innerHTML = Math.floor(this.player.hullStrength);
         let healthBarInner = document.getElementById('health-inner');
         let healthBarOuter = document.getElementById('health');
         if(this.player.hullStrength < 66 && this.player.hullStrength > 33) {
@@ -143,6 +141,16 @@ class Space {
     }
     resetGame() {
         this.player = new Spaceship('USS Schwarzenegger', 99, 5, 0.7);
+        for(let ship of this.activeWave) {
+            ship.explode();
+        }
+        this.currentLevel = 1;
+        $('.modal.next-level').show();
+        const $gameOver = $('<div>').addClass('game-over').html('<p>Game Over</p>');
+        $('.modal.next-level').prepend($gameOver);
+        $('.next-level .level').html(this.currentLevel);
+        console.log(this.currentLevel);
+        $('.next-level a').attr('href', '/enemy/' + this.currentLevel);
         this.activeWave = [];
         this.waves = [];
         this.nextLevel = false;

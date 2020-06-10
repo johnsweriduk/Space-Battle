@@ -86,3 +86,7 @@ input[type="radio"] {
     display: inline-block;
     width: auto;
 }
+.legend .name, .legend .score, .entry .name, .entry .score {
+    width: 50%;
+    float: left;
+}
