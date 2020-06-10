@@ -4,7 +4,10 @@
     left: 50%;
     transform: translate(-50%,-50%);
     z-index: 100;
-    background: #fff;
+    background: rebeccapurple;
+    padding: 50px;
+    border-radius: 15px;
+    color: #fff;
 }
 body {
     margin: 0;
@@ -86,7 +89,38 @@ input[type="radio"] {
     display: inline-block;
     width: auto;
 }
-.legend .name, .legend .score, .entry .name, .entry .score {
-    width: 50%;
+.leaderboard .rank, .leaderboard .name, .leaderboard .score {
+    width: 33.33333333%;
     float: left;
+}
+.button {
+    padding: 10px 15px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+}
+input {
+    background: transparent;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    outline: none;
+    color: #fff;
+}
+button {
+    padding: 10px 15px;
+    background: transparent;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    color: #fff;
+    font-size: inherit;
+    margin-bottom: 15px;
+}
+.title p {
+    margin-bottom: 40px;
+}
+.leaderboard {
+    width: 400px;
+}
+.leaderboard .back {
+    display: inline-block;
+    margin-top: 15px;
 }

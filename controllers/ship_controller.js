@@ -31,14 +31,14 @@ router.get('/edit/:name', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const firepower = req.body.damage;
-    const hp = req.body.hp;
+    let firepower = req.body.damage;
+    let hp = req.body.hp;
     if(firepower <= 1) {
-        firepower = 1;
-        hp = 9;
+        firepower = 0;
+        hp = 8;
     } else if(hp <= 1) {
-        hp = 1;
-        firepower = 9;
+        hp = 0;
+        firepower = 8;
     }
     if(firepower > 9) {
         firepower = 9;
@@ -55,8 +55,8 @@ router.post('/', (req, res) => {
     }
     const createdShip = {
         name: req.body.name,
-        hp: hp * 20,
-        damage: firepower,
+        hp: hp + 1,
+        damage: firepower + 1,
         level: 1,
         highScore: 0,
         xp: 0
@@ -66,7 +66,7 @@ router.post('/', (req, res) => {
         console.log(ship);
     });
     Ship.find({name: req.body.username}, (err, ship) => {
-       res.send(200);
+       res.sendStatus(200);
     });
 });
 
@@ -90,16 +90,17 @@ router.put('/', (req, res) => {
                 ship.level++;
             }
             ship.save();
+            res.sendStatus(200);
         } else {
             Ship.findOne({name: req.body.name}, (err, ship) => {
-                const firepower = req.body.damage;
-                const hp = req.body.hp;
+                let firepower = req.body.shipfirepower;
+                let hp = req.body.shiphull;
                 if(firepower <= 1) {
-                    firepower = 1;
-                    hp = 9;
+                    firepower = 0;
+                    hp = 8;
                 } else if(hp <= 1) {
-                    hp = 1;
-                    firepower = 9;
+                    hp = 0;
+                    firepower = 8;
                 }
                 if(firepower > 9) {
                     firepower = 9;
@@ -108,34 +109,26 @@ router.put('/', (req, res) => {
                     hp = 9;
                     firepower = 1;
                 }
-                while(firepower + hp > 10) {
+                while (firepower + hp > 10) {
                     firepower--;
-                    if(firepower + hp > 10) {
+                    if (firepower + hp > 10) {
                         hp--;
                     }
                 }
-                ship.hp = hp;
-                ship.damage = firepower;
+                ship.hp = hp + 1;
+                ship.damage = firepower + 1;
                 ship.save();
+                res.sendStatus(200);
             })
         }
     });
 });
 
-router.delete('/:shipId', (req, res) => {
-    Ship.find({_id: req.params.shipId}, (err, ship) => {
-        ship[0].remove();
-        res.redirect('/');
-    });
-});
-
-
-
-router.get('/edit/:shipId', (req, res) => {
-    Ship.find({_id: req.params.shipId}, (err, ship) => {
-        res.render('/users/edit.ejs', {
-            ship: ship
-        });
+router.delete('/', (req, res) => {
+    console.log(req.session.currentUser.username);
+    Ship.findOne({name: req.session.currentUser.username}, (err, ship) => {
+        ship.remove();
+        res.sendStatus(200);
     });
 });
 

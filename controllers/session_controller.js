@@ -21,12 +21,12 @@ sessions.post('/', (req, res) => {
         if (err) {
             req.session.message = 'Database connection error';
             req.session.counter = 1;
-            res.redirect('/sessions/new');
+            res.redirect('/');
         } else if (!foundUser) {
             // if found user is undefined/null not found etc
             req.session.message = 'Username not found';
             req.session.counter = 1;
-            res.redirect('/sessions/new');
+            res.redirect('/');
         } else {
             // user is found yay!
             // now let's check if passwords match
@@ -41,7 +41,7 @@ sessions.post('/', (req, res) => {
                 // passwords do not match
                 req.session.message = 'Username/password combination does not match.';
                 req.session.counter = 1;
-                res.redirect('/sessions/new');
+                res.redirect('/');
             }
         }
     })
@@ -49,7 +49,7 @@ sessions.post('/', (req, res) => {
 
 sessions.delete('/', (req, res) => {
     req.session.destroy(() => {
-        res.redirect('/logs')
+        res.redirect('/')
     });
 });
 

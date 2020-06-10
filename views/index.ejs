@@ -10,25 +10,20 @@
 <% if(currentUser) { %>
     <div class="modal">
         <div class="title">
+            <h1>SPACE BATTLE</h1>
             <p>Welcome, <%= currentUser.username %></p>
         </div>
-        <% if(currentUser.ship) { %>
-            <div class="ship-stats">
-                <p>Stats:</p>
-                <p>Level: <%= currentUser.ship.level %></p>
-                <p>XP: <%= currentUser.ship.experience %></p>
-                <p>HP: <%= currentUser.ship.hp  %></p>
-                <p>Damage: <%= currentUser.ship.damage %></p>
-            </div>
-            <% } %>
         <div class="buttons">
             <a id="play" class="button" href="/enemy/1">Play</a>
-            <a id="edit-ship" class="button" href="/ship/<%= currentUser.username %>">Edit Stats</a>
+            <a id="edit-ship" class="button ajax-button" href="/ship/edit/<%= currentUser.username %>">Edit Stats</a>
+            <a id="logout" class="button ajax-button logout" href="/sessions?_method=DELETE">Log Out</a>
+            <a id="leaderboards" class="button ajax-button" href="/ship/leaderboard">Leaderboard</a>
         </div>
     </div>
 <% } else { %>
     <div class="modal">
         <div class="title">
+            <h1>SPACE BATTLE</h1>
             <p>Login/Signup</p>
         </div>
         <div class="buttons">
@@ -40,11 +35,12 @@
 <% if(currentUser) { %>
     <div class="modal next-level" style="display: none;">
         <div class="title">
+            <h1>SPACE BATTLE</h1>
             <p>Level <span class="level">1</span></p>
         </div>
         <div class="buttons">
             <a id="play" class="button" href="/enemy/1">Play</a>
-            <a id="edit-ship" class="button" href="/ship/<%= currentUser.username %>">Edit Stats</a>
+            <a id="logout" class="button ajax-button logout" href="/sessions?_method=DELETE">Log Out</a>
         </div>
     </div>
 <% } %>

@@ -1,5 +1,6 @@
 <div class="logs">
-    <form action="/ship?_method=PUT" method="POST">
+    <form id="edit-form" action="/ship" method="POST">
+        <input type="hidden" name="name" value="<%= ship.name %>"
         <fieldset>
             <legend>Edit your ship</legend>
             <div class="ship-data">
@@ -8,18 +9,19 @@
                 </div>
                 <div class="field">
                     <label for="ship-hull">Ship Hull Strength (1-9):</label>
-                    <input type="text" name="ship-hull" id="ship-hull" value="<%= ship.hp %>"/>
+                    <input type="text" name="shiphull" id="ship-hull" value="<%= ship.hp %>"/>
                 </div>
                 <div class="field">
                     <label for="ship-firepower">Ship Firepower (1-9):</label>
-                    <input type="text" name="ship-firepower" value="<%= ship.damage %>"/>
+                    <input type="text" name="shipfirepower" value="<%= ship.damage %>"/>
                 </div>
             </div>
             <div class="field">
-                <button type="submit">Submit</button>
+                <button id="edit-submit" type="submit">Submit</button>
             </div>
             <div class="delete">
-                <a class="button" href="/users/delete">Delete User</a>
+                <a id="delete-user" class="button" href="/users/delete">Delete User</a>
+                <a class="button" href="/" id="back">Back</a>
             </div>
         </fieldset>
     </form>

@@ -1,5 +1,8 @@
 <div class="leaderboard">
     <div class="legend">
+        <div class="rank">
+            <p>Rank</p>
+        </div>
         <div class="name">
             <p>Name</p>
         </div>
@@ -7,8 +10,13 @@
             <p>High Score</p>
         </div>
     </div>
+    <% let count = 0; %>
     <% for(let ship of ships) { %>
+        <% count++; %>
         <div class="entry">
+            <div class="rank">
+                <p><%= count %></p>
+            </div>
             <div class="name">
                 <p><%= ship.name %></p>
             </div>
@@ -17,4 +25,7 @@
             </div>
         </div>
     <% } %>
+    <div class="back">
+        <a class="button" href="/" id="back">Back</a>
+    </div>
 </div>

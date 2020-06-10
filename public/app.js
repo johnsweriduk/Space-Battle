@@ -8,30 +8,31 @@ const randomNumberBounded = (min, max) => {
 
 const space = new Space();
 let player = new Spaceship('USS Schwarzenegger', 99, 5, 0.7);
-if(typeof playerName != 'undefined') {
-    $.ajax({
-        url: '/ship/data/' + playerName
-    }).done((ship) => {
-        console.log(ship);
-        player = new Spaceship(playerName, ship.hp * (1 + (0.1 * ship.level)), ship.damage * (1 + (0.1 * ship.level)), 1);
-        space.addPlayer(player);
-        space.createOverlay();
-    });
-}
 $(document).on('click', '#play', (e) => {
     e.preventDefault();
-    $('.game-over').remove();
-    const href= $(e.target).attr('href');
-    $.ajax({
-        url: href
-    }).done( (waves) => {
-        for(let wave of waves) {
-            space.nextLevel = false;
-            space.addWave(wave);
-            requestAnimationFrame(mainLoop);
-        }
-    });
-    $('.modal').hide();
+
+    if(typeof playerName != 'undefined') {
+        $.ajax({
+            url: '/ship/data/' + playerName
+        }).done((ship) => {
+            console.log(ship);
+            player = new Spaceship(playerName, Math.floor(ship.hp * (1 + (0.1 * (ship.level - 1))) * 20), ship.damage * (1 + (0.1 * (ship.level - 1))), 1);
+            space.addPlayer(player);
+            space.createOverlay();
+            $('.game-over').remove();
+            const href= $(e.target).attr('href');
+            $.ajax({
+                url: href
+            }).done( (waves) => {
+                for(let wave of waves) {
+                    space.nextLevel = false;
+                    space.addWave(wave);
+                    requestAnimationFrame(mainLoop);
+                }
+            });
+            $('.modal').hide();
+        });
+    }
 });
 
 const mainLoop = () => {
@@ -40,14 +41,45 @@ const mainLoop = () => {
         requestAnimationFrame(mainLoop);
     }
 };
+let oldHtml;
 $(document).on('click', '.ajax-button', (e) => {
     e.preventDefault();
+    let method;
+    if($(e.target).hasClass('logout')) {
+        method = 'POST';
+    } else {
+        method = 'GET';
+    }
+    oldHtml = $('.modal').html();
     $.ajax({
-        url: $(e.target).attr('href')
+        url: $(e.target).attr('href'),
+        method: method
     }).done((data) => {
         console.log(data);
-        $('.modal').html(data);
+        if(method == 'GET') {
+            $('.modal').html(data);
+        } else {
+            window.location.href="/";
+        }
     });
+});
+$(document).on('click', '#edit-submit', (e) => {
+    e.preventDefault();
+    console.log('submit');
+    const data = {
+        name: $('input[type="hidden"]').val(),
+        shiphull: $('#ship-hull').val(),
+        shipfirepower: $('input[name="shipfirepower"]').val()
+    };
+    console.log(data);
+    $.ajax({
+        url: $('#edit-form').attr('action'),
+        data: data,
+        method: 'PUT'
+    }).done((data) => {
+        console.log('test');
+        $('.modal').html(oldHtml);
+    })
 })
 $(document).on('click', '#new-user', (e) => {
     e.preventDefault();
@@ -56,7 +88,7 @@ $(document).on('click', '#new-user', (e) => {
     // create ship
     // load login data
     $.ajax({
-        url: '/users/',
+        url: '/users',
         data: userData,
         method: 'POST'
     }).done( (data) => {
@@ -87,13 +119,20 @@ $(document).on('click', '#new-user', (e) => {
 });
 $(document).on('click', '#back', (e) => {
     e.preventDefault();
-    const html = '\n' +
-        '        <div class="title">' +
-        '            <p>Login/Signup</p>' +
-        '        </div>\n' +
-        '        <div class="buttons">' +
-        '            <a id="new-account" class="button ajax-button" href="/users/new">New Account</a>' +
-        '            <a id="login" class="button ajax-button" href="/sessions/new">Login</a>' +
-        '        </div>';
-    $('.modal').html(html);
+    $('.modal').html(oldHtml);
+});
+
+$(document).on('click', '#delete-user', (e) => {
+   e.preventDefault();
+   $.ajax({
+       url: '/ship',
+       method: 'DELETE'
+   }).done((data) => {
+        $.ajax({
+            url: '/users',
+            method: 'DELETE'
+        }).done((data) => {
+            window.location.href = '/';
+        })
+   });
 });
