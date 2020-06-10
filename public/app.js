@@ -8,16 +8,26 @@ const randomNumberBounded = (min, max) => {
 
 const space = new Space();
 const player = new Spaceship('USS Schwarzenegger', 99, 5, 0.7);
+space.addPlayer(player);
 $(document).on('click', '#play', (e) => {
     e.preventDefault();
-    space.addPlayer(player);
-    space.addAliens(20);
-    space.cycleShips();
-    requestAnimationFrame(mainLoop);
+    const href= $(e.target).attr('href');
+    space.createOverlay();
+    $.ajax({
+        url: href
+    }).done( (waves) => {
+        for(let wave of waves) {
+            space.nextLevel = false;
+            space.addWave(wave);
+            requestAnimationFrame(mainLoop);
+        }
+    });
     $('.modal').hide();
 });
 
 const mainLoop = () => {
     space.update();
-    requestAnimationFrame(mainLoop);
-}
+    if(!space.nextLevel) {
+        requestAnimationFrame(mainLoop);
+    }
+};

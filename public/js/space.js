@@ -1,56 +1,79 @@
 class Space {
     constructor() {
         this.player = '';
-        this.aliens = [];
-        this.activeAlien = '';
+        this.activeWave = [];
+        this.waves = [];
         this.alienShipFactory = new AlienShipFactory();
-        this.createOverlay();
+        this.currentLevel = 1;
+        this.nextLevel = false;
+        this.shipCount = 1;
     }
     addPlayer(ship) {
         this.player = ship;
     }
-    addAliens(numAliens) {
+    addWave(numAliens) {
+        const wave = [];
         for(let i = 1; i <= numAliens; i++) {
-            this.aliens.push(this.alienShipFactory.createShip(`ufo-${i}`));
+            wave.push(this.alienShipFactory.createShip(`ufo-${this.shipCount}`));
+            this.shipCount++;
         }
+        this.waves.push(wave);
     }
-    cycleShips() {
-        if(this.aliens.length == 0) {
-            this.activeAlien = -1;
+    cycleWaves() {
+        if(this.activeWave.length > 0) {
+            //this.activeWave = [];
         } else {
-            let newAlien = this.aliens.shift();
-            newAlien.enterBattle();
-            this.activeAlien = newAlien;
+            let newWave = this.waves.shift();
+            for(let alien of newWave) {
+                alien.enterBattle();
+            }
+            this.activeWave = newWave;
             let self = this;
-            this.activeAlien.domElement.addEventListener('click', function() {
-                if(self.activeAlien.isAlive && self.player.canAttack) {
-                    self.player.attack(self.activeAlien);
-                }
-            });
+            for(let alien of this.activeWave) {
+                alien.domElement.addEventListener('click', function () {
+                    if (alien.isAlive && self.player.canAttack) {
+                        self.player.attack(alien);
+                    }
+                });
+            }
         }
     }
     gameLoop() {
-        return this.player.lives >= 0 && this.activeAlien != -1;
+        return this.player.lives >= 0 && (this.waves.length > 0 || this.activeWave.length > 0);
     }
     update() {
         this.updateOverlay();
-        if(this.gameLoop()) {
-            // player is alive, game isnt over
-            if(this.activeAlien.isAlive) {
-                this.activeAlien.move();
-            } else {
-                this.cycleShips();
+        for(let i = 0; i < this.activeWave.length; i++) {
+            if(!this.activeWave[i].isAlive) {
+                this.activeWave.splice(i, 1);
             }
-            if(Math.random() > 0.996) {
-                this.activeAlien.attack(this.player);
+        }
+        if(this.gameLoop() && !this.nextLevel) {
+            // player is alive, game isnt over
+            if(this.activeWave.length > 0) {
+                for(let alien of this.activeWave) {
+                    alien.move();
+                }
+            } else if(this.waves.length > 0) {
+                this.cycleWaves();
+            }
+            for(let alien of this.activeWave) {
+                if (Math.random() > 0.999) {
+                    alien.attack(this.player);
+                }
             }
         } else {
-            if(this.player.lives >= 0) {
-                alert('You Win!');
-            } else {
+            if(this.player.lives >= 0 && !this.nextLevel) {
+                this.nextLevel = true;
+                this.currentLevel++;
+                $('.next-level .level').html(this.currentLevel);
+                $('.next-level a').attr('href', '/enemy/' + this.currentLevel);
+                $('.next-level').show();
+            } else if(!this.nextLevel) {
                 alert('GAME OVER!');
+                // reset
+                this.resetGame();
             }
-            this.resetGame();
         }
     }
     updateOverlay() {
@@ -99,8 +122,8 @@ class Space {
     }
     resetGame() {
         this.player = new Spaceship('USS Schwarzenegger', 99, 5, 0.7);
-        this.activeAlien = '';
-        this.addAliens(20);
-        this.cycleShips();
+        this.activeWave = [];
+        this.waves = [];
+        this.nextLevel = false;
     }
 }

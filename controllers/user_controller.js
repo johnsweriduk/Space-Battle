@@ -31,4 +31,8 @@ users.post('/', (req, res) => {
     })
 });
 
+users.delete('/', (req, res) => {
+   User.findOneAndRemove({username: req.session.currentUser.username});
+   res.redirect('/users/new');
+});
 module.exports = users;

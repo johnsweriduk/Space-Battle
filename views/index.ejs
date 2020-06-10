@@ -10,10 +10,17 @@
 <% if(currentUser) { %>
     <div class="modal">
         <div class="title">
-            <p>Welcome, <% currentUser.username %></p>
+            <p>Welcome, <%= currentUser.username %></p>
+        </div>
+        <div class="ship-stats">
+            <p>Stats:</p>
+            <p>Level: <%= currentUser.ship.level %></p>
+            <p>XP: <%= currentUser.ship.experience %></p>
+            <p>HP: <%= currentUser.ship.hp * (1 + currentUser.ship.level / 15) * 20 %></p>
+            <p>Damage: <%= currentUser.ship.damage * (1 + currentUser.ship.level / 15) %></p>
         </div>
         <div class="buttons">
-            <a id="play" class="button" href="/play/1">Play</a>
+            <a id="play" class="button" href="/enemy/1">Play</a>
         </div>
     </div>
 <% } else { %>
@@ -27,6 +34,15 @@
         </div>
     </div>
 <% } %>
+
+<div class="modal next-level" style="display: none;">
+    <div class="title">
+        <p>Level <span class="level">1</span></p>
+    </div>
+    <div class="buttons">
+        <a id="play" class="button" href="/enemy/1">Play</a>
+    </div>
+</div>
 <div id="space"></div>
 <%- include ('partials/scripts.ejs') %>
 </body>

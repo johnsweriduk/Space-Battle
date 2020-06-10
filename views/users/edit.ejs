@@ -1,46 +1,41 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Sign Up</title>
-    <%- include('../partials/head.ejs') %>
-</head>
-<body>
+    <head>
+        <title>Sign Up</title>
+        <%- include('../partials/head.ejs') %>
+    </head>
+    <body>
     <%- include('../partials/nav.ejs') %>
     <div class="logs">
         <% if(message != '') { %>
             <div class="message">
-                <p><%= message%></p>
+                <p><%= message %></p>
             </div>
         <% } %>
-        <form action="/users" method="POST">
+        <form action="/users?_method=PUT" method="POST">
             <fieldset>
-                <legend>Sign Up</legend>
-                <div class="field">
-                    <label for="name">Username:</label>
-                    <input type="text" name="username" required/>
-                </div>
-                <div class="field">
-                    <label for="password">Password:</label>
-                    <input type="password" name="password" />
-                </div>
+                <legend>Edit your ship</legend>
                 <div class="ship-data">
                     <div class="title">
                         <p>Set ship attributes: (hull strength and firepower must add up to 10)</p>
                     </div>
                     <div class="field">
                         <label for="ship-hull">Ship Hull Strength (1-9):</label>
-                        <input type="text" name="ship-hull" id="ship-hull" />
+                        <input type="text" name="ship-hull" id="ship-hull" value="<%= currentUser.ship.hp %>"/>
                     </div>
                     <div class="field">
                         <label for="ship-firepower">Ship Firepower (1-9):</label>
-                        <input type="text" name="ship-firepower" />
+                        <input type="text" name="ship-firepower" value="<%= currentUser.ship.damage %>"/>
                     </div>
                 </div>
                 <div class="field">
                     <button type="submit">Submit</button>
                 </div>
+                <div class="delete">
+                    <a class="button" href="/users/delete">Delete User</a>
+                </div>
             </fieldset>
         </form>
     </div>
-</body>
+    </body>
 </html>

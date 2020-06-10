@@ -16,7 +16,7 @@ class Enemy extends Spaceship {
         if(!this.isAlive) {
             this.explode();
         }
-    } 
+    }
     attack(ship) {
         this.canAttack = false;
         let self = this;

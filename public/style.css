@@ -6,3 +6,83 @@
     z-index: 100;
     background: #fff;
 }
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+* {
+    box-sizing: border-box;
+}
+img {
+    max-width: 100%;
+}
+body {
+    margin-bottom: 100px;
+}
+.logs,
+nav,
+nav + .log,
+.edit-log {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+nav {
+    background: #f7f7f7;
+    margin-bottom: 50px;
+}
+nav li {
+    display: inline-block;
+    padding: 10px 15px;
+}
+a {
+    color: inherit;
+    text-decoration: none;
+    outline: none;
+}
+.logs .log {
+    width: 33.33333%;
+    float: left;
+    padding: 25px;
+    background: #fff;
+    transition: all 0.2s ease-in-out;
+}
+.logs .log:hover {
+    background: #f7f7f7;
+}
+.logs .log img {
+    width: 100%;
+    height: auto;
+}
+.edit a,
+input,
+button,
+form + a {
+    padding: 10px 15px;
+    border: 1px solid black;
+    display: inline-block;
+    margin-top: 15px;
+}
+button {
+    cursor: pointer;
+}
+.field {
+    margin-bottom: 15px;
+}
+.field input,
+.field textarea {
+    width: 100%;
+    margin-top: 5px;
+}
+form + form {
+    float: left;
+    margin-right: 15px;
+}
+h5 {
+    font-size: 30px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+input[type="radio"] {
+    display: inline-block;
+    width: auto;
+}
