@@ -157,13 +157,13 @@ class Space {
         document.getElementById('space').appendChild(overlay);
     }
     resetGame() {
+        const $gameOver = $('<div>').addClass('game-over').html('<p>Game Over</p><p>Score: ' + this.player.score + '</p>');
         this.player = new Spaceship('USS Schwarzenegger', 99, 5, 0.7);
         for(let ship of this.activeWave) {
             ship.explode();
         }
         this.currentLevel = 1;
         $('.modal.next-level').show();
-        const $gameOver = $('<div>').addClass('game-over').html('<p>Game Over</p>');
         $('.modal.next-level').prepend($gameOver);
         $('.next-level .level').html(this.currentLevel);
         $('.next-level a:first-child').attr('href', '/enemy/' + this.currentLevel);
