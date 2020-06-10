@@ -8,14 +8,16 @@ class Space {
         this.nextLevel = false;
         this.shipCount = 1;
         this.moveTimeout = true;
+        this.originalHullStrength;
     }
     addPlayer(ship) {
         this.player = ship;
+        this.originalHullStrength = ship.hullStrength;
     }
     addWave(numAliens) {
         const wave = [];
         for(let i = 1; i <= numAliens; i++) {
-            wave.push(this.alienShipFactory.createShip(`ufo-${this.shipCount}`));
+            wave.push(this.alienShipFactory.createShip(`ufo-${this.shipCount}`, this.currentLevel));
             this.shipCount++;
         }
         this.waves.push(wave);
@@ -43,7 +45,9 @@ class Space {
         return this.player.lives >= 0 && (this.waves.length > 0 || this.activeWave.length > 0);
     }
     update() {
-        this.updateOverlay();
+        if(this.moveTimeout) {
+            this.updateOverlay();
+        }
         for(let i = 0; i < this.activeWave.length; i++) {
             if(!this.activeWave[i].isAlive) {
                 this.activeWave.splice(i, 1);
@@ -64,7 +68,7 @@ class Space {
                 this.cycleWaves();
             }
             for(let alien of this.activeWave) {
-                if (Math.random() > 0.999) {
+                if (Math.random() > 0.9995) {
                     alien.attack(this.player);
                 }
             }
@@ -110,7 +114,7 @@ class Space {
             healthBarInner.style.backgroundColor = 'green';
             healthBarOuter.style.borderColor = 'red';
         }
-        healthBarInner.style.transform = `translateX(${this.player.hullStrength - 100}%)`;
+        healthBarInner.style.transform = `translateX(${(this.originalHullStrength - this.player.hullStrength) / this.originalHullStrength * -100}%)`;
     }
     createOverlay() {
         let overlay = document.createElement('div');

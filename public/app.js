@@ -9,10 +9,10 @@ const randomNumberBounded = (min, max) => {
 const space = new Space();
 const player = new Spaceship('USS Schwarzenegger', 99, 5, 0.7);
 space.addPlayer(player);
+space.createOverlay();
 $(document).on('click', '#play', (e) => {
     e.preventDefault();
     const href= $(e.target).attr('href');
-    space.createOverlay();
     $.ajax({
         url: href
     }).done( (waves) => {
