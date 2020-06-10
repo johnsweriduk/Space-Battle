@@ -38,7 +38,15 @@ router.delete('/:shipName', (req, res) => {
     Ship.find({name: req.params.shipName}, (err, ship) => {
         ship[0].remove();
         res.redirect('/');
-    })
+    });
+});
+
+router.get('/edit/:shipName', (req, res) => {
+    Ship.find({name: req.params.username}, (err, ship) => {
+        res.render('/users/edit.ejs', {
+            ship: ship
+        });
+    });
 });
 
 module.exports = router;

@@ -16,8 +16,8 @@
             <p>Stats:</p>
             <p>Level: <%= currentUser.ship.level %></p>
             <p>XP: <%= currentUser.ship.experience %></p>
-            <p>HP: <%= currentUser.ship.hp * (1 + currentUser.ship.level / 15) * 20 %></p>
-            <p>Damage: <%= currentUser.ship.damage * (1 + currentUser.ship.level / 15) %></p>
+            <p>HP: <%= currentUser.ship.hp  %></p>
+            <p>Damage: <%= currentUser.ship.damage %></p>
         </div>
         <div class="buttons">
             <a id="play" class="button" href="/enemy/1">Play</a>

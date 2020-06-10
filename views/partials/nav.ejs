@@ -1,8 +1,8 @@
 <nav>
     <ul>
-        <li><a href="/logs">Home</a></li>
+        <li><a href="/">Home</a></li>
         <% if( currentUser ) { %>
-            <li><a href="/logs/new-log">New log</a></li>
+            <li><a href="/users/edit">Edit Ship Stats</a></li>
         <% } %>
         <% if( currentUser ) { %>
             <li>Welcome, <%= currentUser.username %></li>
