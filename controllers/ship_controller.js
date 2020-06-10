@@ -10,7 +10,11 @@ router.get('/', (req, res) => {
         })
     });
 });
-
+router.get('/data/:shipName', (req, res) => {
+   Ship.findOne({name: req.params.shipName}, (err, ship) => {
+       res.send(ship);
+   });
+});
 router.get('/leaderboard', (req, res) => {
     Ship.find({}).sort({highScore: -1}).limit(10).exec( (err, ships) => {
         res.render('ships/leaderboard.ejs', {
@@ -22,12 +26,27 @@ router.get('/leaderboard', (req, res) => {
 router.post('/', (req, res) => {
     const firepower = req.body.damage;
     const hp = req.body.hp;
+    if(firepower <= 1) {
+        firepower = 1;
+        hp = 9;
+    } else if(hp <= 1) {
+        hp = 1;
+        firepower = 9;
+    }
+    if(firepower > 9) {
+        firepower = 9;
+        hp = 1;
+    } else if(hp > 9) {
+        hp = 9;
+        firepower = 1;
+    }
     const createdShip = {
         name: req.body.name,
         hp: hp * 20,
         damage: firepower,
         level: 1,
-        highScore: 0
+        highScore: 0,
+        xp: 0
     };
     console.log(createdShip);
     Ship.create(createdShip, (err, ship) => {
@@ -47,14 +66,18 @@ router.put('/', (req, res) => {
                 console.log('test');
                 ship.highScore = req.body.score;
             }
+            console.log(ship.xp);
+            ship.xp = parseInt(ship.xp) + parseInt(req.body.xp);
+            console.log('level: ' + ship.level);
+            console.log(ship.xp);
+            console.log(req.body.xp);
+            console.log('xp required: ' + Math.pow(ship.level, 2) * 10);
+            while(ship.xp > 10 * Math.pow(ship.level, 2)) {
+                ship.xp -= 10 * Math.pow(ship.level, 2);
+                ship.level++;
+            }
+            ship.save();
         }
-        if(ship.experience >= 10 * ship.level) {
-            ship.experience -= ship.level * 10;
-            ship.level++;
-            ship.hp *= 1.1;
-            ship.damage *= 1.1;
-        }
-        ship.save();
     });
 });
 

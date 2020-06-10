@@ -7,9 +7,17 @@ const randomNumberBounded = (min, max) => {
 }
 
 const space = new Space();
-const player = new Spaceship('USS Schwarzenegger', 99, 5, 0.7);
-space.addPlayer(player);
-space.createOverlay();
+let player = new Spaceship('USS Schwarzenegger', 99, 5, 0.7);
+if(typeof playerName != 'undefined') {
+    $.ajax({
+        url: '/ship/data/' + playerName
+    }).done((ship) => {
+        console.log(ship);
+        player = new Spaceship(playerName, ship.hp * (1 + (0.1 * ship.level)), ship.damage * (1 + (0.1 * ship.level)), 1);
+        space.addPlayer(player);
+        space.createOverlay();
+    });
+}
 $(document).on('click', '#play', (e) => {
     e.preventDefault();
     $('.game-over').remove();

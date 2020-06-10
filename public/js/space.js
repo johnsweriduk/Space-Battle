@@ -9,10 +9,12 @@ class Space {
         this.shipCount = 1;
         this.moveTimeout = true;
         this.originalHullStrength;
+        this.playerDamage;
     }
     addPlayer(ship) {
         this.player = ship;
         this.originalHullStrength = ship.hullStrength;
+        this.playerDamage = ship.firePower;
     }
     addWave(numAliens) {
         const wave = [];
@@ -76,8 +78,10 @@ class Space {
                 this.currentLevel++;
                 const data = {
                     name: playerName,
-                    score: space.player.score
+                    score: this.player.score,
+                    xp: this.player.xp
                 };
+                this.player.xp = 0;
                 $.ajax({
                     url: '/ship',
                     data: data,
@@ -91,6 +95,19 @@ class Space {
             } else if(!this.nextLevel) {
                 //alert('GAME OVER!');
                 // reset
+                const data = {
+                    name: playerName,
+                    score: this.player.score,
+                    xp: this.player.xp
+                };
+                this.player.xp = 0;
+                $.ajax({
+                    url: '/ship',
+                    data: data,
+                    method: 'PUT'
+                }).done((data) => {
+                    // do nothing
+                });
                 this.resetGame();
             }
         }
@@ -153,5 +170,6 @@ class Space {
         this.activeWave = [];
         this.waves = [];
         this.nextLevel = true;
+        this.addPlayer(new Spaceship(playerName, this.originalHullStrength, this.playerDamage, 1))
     }
 }

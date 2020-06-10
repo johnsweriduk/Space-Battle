@@ -7,7 +7,8 @@ const shipSchema = Schema({
     damage: Number,
     experience: Number,
     level: Number,
-    highScore: Number
+    highScore: Number,
+    xp: Number
 });
 
 const Ship = mongoose.model('Ship', shipSchema);

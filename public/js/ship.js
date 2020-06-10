@@ -7,6 +7,7 @@ class Spaceship {
         this.isAlive = true;
         this.canAttack = true;
         this.score = 0;
+        this.xp = 0;
         this.lives = 3;
     }
     attack(ship) {
@@ -16,12 +17,13 @@ class Spaceship {
             self.canAttack = true;
         }, 1000);
         new Audio('sound/laser.wav').play();
-        if(Math.random() <= this.accuracy) {
+        if(Math.random() <= 1) {
             // successful hit
             console.log(`${this.name} blasted ${ship.name} for ${this.firePower} damage.`);
             ship.takeDamage(this.firePower);
             if(!ship.isAlive) {
                 this.score += 100;
+                this.xp += 10;
             }
         } else {
             console.log(`${this.name} missed ${ship.name} horribly. Seriously, what were they thinking?`);
