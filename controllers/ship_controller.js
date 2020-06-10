@@ -22,6 +22,13 @@ router.get('/leaderboard', (req, res) => {
         });
     });
 });
+router.get('/edit/:name', (req, res) => {
+    Ship.findOne({name: req.params.name}, (err, ship) => {
+       res.render('ships/edit.ejs', {
+           ship: ship
+       })
+    });
+});
 
 router.post('/', (req, res) => {
     const firepower = req.body.damage;
@@ -39,6 +46,12 @@ router.post('/', (req, res) => {
     } else if(hp > 9) {
         hp = 9;
         firepower = 1;
+    }
+    while(firepower + hp > 10) {
+        firepower--;
+        if(firepower + hp > 10) {
+            hp--;
+        }
     }
     const createdShip = {
         name: req.body.name,
@@ -77,6 +90,34 @@ router.put('/', (req, res) => {
                 ship.level++;
             }
             ship.save();
+        } else {
+            Ship.findOne({name: req.body.name}, (err, ship) => {
+                const firepower = req.body.damage;
+                const hp = req.body.hp;
+                if(firepower <= 1) {
+                    firepower = 1;
+                    hp = 9;
+                } else if(hp <= 1) {
+                    hp = 1;
+                    firepower = 9;
+                }
+                if(firepower > 9) {
+                    firepower = 9;
+                    hp = 1;
+                } else if(hp > 9) {
+                    hp = 9;
+                    firepower = 1;
+                }
+                while(firepower + hp > 10) {
+                    firepower--;
+                    if(firepower + hp > 10) {
+                        hp--;
+                    }
+                }
+                ship.hp = hp;
+                ship.damage = firepower;
+                ship.save();
+            })
         }
     });
 });

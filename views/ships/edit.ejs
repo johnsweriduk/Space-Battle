@@ -1,41 +1,26 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Sign Up</title>
-        <%- include('../partials/head.ejs') %>
-    </head>
-    <body>
-    <%- include('../partials/nav.ejs') %>
-    <div class="logs">
-        <% if(message != '') { %>
-            <div class="message">
-                <p><%= message %></p>
-            </div>
-        <% } %>
-        <form action="/users?_method=PUT" method="POST">
-            <fieldset>
-                <legend>Edit your ship</legend>
-                <div class="ship-data">
-                    <div class="title">
-                        <p>Set ship attributes: (hull strength and firepower must add up to 10)</p>
-                    </div>
-                    <div class="field">
-                        <label for="ship-hull">Ship Hull Strength (1-9):</label>
-                        <input type="text" name="ship-hull" id="ship-hull" value="<%= currentUser.ship.hp %>"/>
-                    </div>
-                    <div class="field">
-                        <label for="ship-firepower">Ship Firepower (1-9):</label>
-                        <input type="text" name="ship-firepower" value="<%= currentUser.ship.damage %>"/>
-                    </div>
+<div class="logs">
+    <form action="/ship?_method=PUT" method="POST">
+        <fieldset>
+            <legend>Edit your ship</legend>
+            <div class="ship-data">
+                <div class="title">
+                    <p>Set ship attributes: (hull strength and firepower must add up to 10)</p>
                 </div>
                 <div class="field">
-                    <button type="submit">Submit</button>
+                    <label for="ship-hull">Ship Hull Strength (1-9):</label>
+                    <input type="text" name="ship-hull" id="ship-hull" value="<%= ship.hp %>"/>
                 </div>
-                <div class="delete">
-                    <a class="button" href="/users/delete">Delete User</a>
+                <div class="field">
+                    <label for="ship-firepower">Ship Firepower (1-9):</label>
+                    <input type="text" name="ship-firepower" value="<%= ship.damage %>"/>
                 </div>
-            </fieldset>
-        </form>
-    </div>
-    </body>
-</html>
+            </div>
+            <div class="field">
+                <button type="submit">Submit</button>
+            </div>
+            <div class="delete">
+                <a class="button" href="/users/delete">Delete User</a>
+            </div>
+        </fieldset>
+    </form>
+</div>
