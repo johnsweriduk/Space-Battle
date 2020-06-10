@@ -29,7 +29,7 @@ $(document).on('click', '#play', (e) => {
                     space.addWave(wave);
                 }
                 requestAnimationFrame(mainLoop);
-                $('.modal').hide();
+                $('.modal.main').hide();
             });
         });
     }
@@ -52,7 +52,7 @@ $(document).on('click', '#restart', (e) => {
     e.preventDefault();
     space = new Space();
     $('#space').empty();
-    $('.modal').show();
+    $('.modal.main').show();
     $('.modal.next-level').hide();
 });
 const mainLoop = () => {
@@ -70,16 +70,15 @@ $(document).on('click', '.ajax-button', (e) => {
     } else {
         method = 'GET';
     }
-    oldHtml = $('.modal').html();
+    oldHtml = $('.modal.main').html();
     $.ajax({
         url: $(e.target).attr('href'),
         method: method
     }).done((data) => {
         console.log(data);
         if(method == 'GET') {
-            $('.modal').html(data);
+            $('.modal.main').html(data);
         } else {
-            oldHtml = '';
             window.location.href="/";
         }
     });
@@ -99,7 +98,7 @@ $(document).on('click', '#edit-submit', (e) => {
         method: 'PUT'
     }).done((data) => {
         console.log('test');
-        $('.modal').html(oldHtml);
+        $('.modal.main').html(oldHtml);
     })
 })
 $(document).on('click', '#new-user', (e) => {
@@ -130,17 +129,17 @@ $(document).on('click', '#new-user', (e) => {
                 $.ajax({
                     url: '/sessions/new'
                 }).done((data) => {
-                    $('.modal').html(data);
+                    $('.modal.main').html(data);
                 });
             });
         } else {
-            $('.modal').append('<p class="error">Username already taken, please choose another.</p>');
+            $('.modal.main').append('<p class="error">Username already taken, please choose another.</p>');
         }
     });
 });
 $(document).on('click', '#back', (e) => {
     e.preventDefault();
-    $('.modal').html(oldHtml);
+    $('.modal.main').html(oldHtml);
 });
 
 $(document).on('click', '#delete-user', (e) => {
