@@ -12,12 +12,12 @@
                 <p><%= message%></p>
             </div>
         <% } %>
-        <form action="/users" method="POST">
+        <form id="new-user-form" action="/users" method="POST">
             <fieldset>
                 <legend>Sign Up</legend>
                 <div class="field">
                     <label for="name">Username:</label>
-                    <input type="text" name="username" required/>
+                    <input id="name" type="text" name="username" required/>
                 </div>
                 <div class="field">
                     <label for="password">Password:</label>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="field">
-                    <button type="submit">Submit</button>
+                    <button id="new-user" type="submit">Submit</button>
                 </div>
             </fieldset>
         </form>

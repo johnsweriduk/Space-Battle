@@ -12,13 +12,15 @@
         <div class="title">
             <p>Welcome, <%= currentUser.username %></p>
         </div>
-        <div class="ship-stats">
-            <p>Stats:</p>
-            <p>Level: <%= currentUser.ship.level %></p>
-            <p>XP: <%= currentUser.ship.experience %></p>
-            <p>HP: <%= currentUser.ship.hp  %></p>
-            <p>Damage: <%= currentUser.ship.damage %></p>
-        </div>
+        <% if(currentUser.ship) { %>
+            <div class="ship-stats">
+                <p>Stats:</p>
+                <p>Level: <%= currentUser.ship.level %></p>
+                <p>XP: <%= currentUser.ship.experience %></p>
+                <p>HP: <%= currentUser.ship.hp  %></p>
+                <p>Damage: <%= currentUser.ship.damage %></p>
+            </div>
+            <% } %>
         <div class="buttons">
             <a id="play" class="button" href="/enemy/1">Play</a>
         </div>

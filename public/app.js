@@ -31,3 +31,18 @@ const mainLoop = () => {
         requestAnimationFrame(mainLoop);
     }
 };
+
+$(document).on('click', '#new-user', (e) => {
+    e.preventDefault();
+    const userData = $('#new-user-form').serialize();
+    $.ajax({
+        url: '/users/',
+        data: userData
+    }).done( (data) => {
+        $.ajax({
+
+        }).done((data) => {
+
+        });
+    })
+});

@@ -66,6 +66,17 @@ class Space {
             if(this.player.lives >= 0 && !this.nextLevel) {
                 this.nextLevel = true;
                 this.currentLevel++;
+                const data = {
+                    name: playerName,
+                    score: space.player.score
+                };
+                $.ajax({
+                    url: '/ship',
+                    data: data,
+                    method: 'PUT'
+                }).done((data) => {
+                    // do nothing
+                });
                 $('.next-level .level').html(this.currentLevel);
                 $('.next-level a').attr('href', '/enemy/' + this.currentLevel);
                 $('.next-level').show();
