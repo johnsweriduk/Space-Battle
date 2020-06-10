@@ -12,9 +12,8 @@ router.get('/', (req, res) => {
 });
 
 router.get('/leaderboard', (req, res) => {
-    Ship.find({}, (err, ships) => {
-        ships = ships.sort({highScore: -1}).limit(20);
-        res.render('leaderboard.ejs', {
+    Ship.find({}).sort({highScore: -1}).limit(10).exec( (err, ships) => {
+        res.render('ships/leaderboard.ejs', {
             ships: ships
         });
     });

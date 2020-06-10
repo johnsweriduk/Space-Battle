@@ -1,0 +1,20 @@
+<div class="leaderboard">
+    <div class="legend">
+        <div class="name">
+            <p>Name</p>
+        </div>
+        <div class="score">
+            <p>High Score</p>
+        </div>
+    </div>
+    <% for(let ship of ships) { %>
+        <div class="entry">
+            <div class="name">
+                <p><%= ship.name %></p>
+            </div>
+            <div class="score">
+                <p><%= ship.highScore%></p>
+            </div>
+        </div>
+    <% } %>
+</div>

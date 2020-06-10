@@ -32,7 +32,8 @@ db.on('error', (err) => console.log(err.message + ' is Mongod not running?'));
 db.on('connected', () => console.log('mongo connected: ', mongoURI));
 db.on('disconnected', () => console.log('mongo disconnected'));
 
-
+// uncomment to wipe database
+//db.dropDatabase(console.log('dropped'));
 
 // Controllers
 const shipController = require('./controllers/ship_controller.js');
